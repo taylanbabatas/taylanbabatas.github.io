@@ -1,180 +1,452 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Taylan Babataş</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>42u Agency | Taylan Babataş</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & CORE --- */
+        :root {
+            --bg: #000000;
+            --surface: #111111;
+            --text: #ffffff;
+            --brand: #ccff00; /* Asit Yeşili - Çok Trend */
+            --brand-dark: #8cb300;
+            --gray: #888888;
+            --padding-x: 6vw;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* --- TYPOGRAPHY SCALING --- */
+        h1 {
+            font-size: clamp(3rem, 10vw, 8rem); /* Ekrana göre devasa büyür/küçülür */
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- HEADER & MOBILE MENU --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px var(--padding-x);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        /* Desktop Nav */
+        .desktop-nav {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .desktop-nav a {
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .desktop-nav a:hover { color: var(--brand); }
+
+        /* Mobile Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .bar {
+            width: 30px;
+            height: 2px;
+            background-color: white;
+            transition: 0.3s;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 999;
+        }
+        
+        .mobile-menu.active { right: 0; }
+        .mobile-menu a { font-size: 2rem; font-weight: 800; text-transform: uppercase; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            padding: 0 var(--padding-x);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Glow Effect Background */
+        .glow-blob {
+            position: absolute;
+            top: 20%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(204,255,0,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: pulse 10s infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-main {
+            margin-top: 40px;
+            padding: 20px 40px;
+            background-color: var(--brand);
+            color: #000;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-block;
+            text-transform: uppercase;
+            border-radius: 4px; /* Zara keskinliği */
+            transition: 0.3s;
+            max-width: fit-content;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(204, 255, 0, 0.2);
+        }
+
+        /* --- INFINITE MARQUEE (Nike Style) --- */
+        .marquee-container {
+            background: var(--brand);
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transform: rotate(-2deg) scale(1.05); /* Asi duruş */
+            margin: 50px 0;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 15s linear infinite;
+            font-weight: 900;
+            color: #000;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- BENTO GRID SERVICES (Midas/Apple Style) --- */
+        .services {
+            padding: 100px var(--padding-x);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr); /* 12'li ızgara sistemi */
+            grid-template-rows: auto auto;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .bento-card {
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bento-card:hover {
+            border-color: var(--brand);
+        }
+
+        .bento-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .bento-card i {
+            font-size: 3rem;
+            color: var(--brand);
+            margin-bottom: 20px;
+        }
+
+        /* Grid Yerleşimleri */
+        .card-lg { grid-column: span 12; } /* Mobilde tam satır */
+        .card-md { grid-column: span 12; }
+        
+        @media (min-width: 768px) {
+            .card-lg { grid-column: span 8; } /* Masaüstünde geniş */
+            .card-md { grid-column: span 4; } /* Masaüstünde dar */
+        }
+
+        /* --- PRESTIGE LIST --- */
+        .prestige {
+            padding: 50px var(--padding-x);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .client-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            opacity: 0.6;
+            margin-top: 30px;
+        }
+        
+        .client-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 80px var(--padding-x);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 50px;
+        }
+        
+        .footer-big-text {
+            font-size: clamp(2rem, 8vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1;
+            color: var(--brand);
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        /* --- MOBILE MEDIA QUERIES (ÖNEMLİ) --- */
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            .hamburger { display: flex; }
+            .hero { align-items: flex-start; text-align: left; }
+            .bento-grid { display: flex; flex-direction: column; }
+            .marquee-container { transform: rotate(0); margin: 30px 0; }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 sticky-top">
-        <a class="navbar-brand display-4 text-primary" href="#">Taylan Babataş</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Anasayfa <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://github.com/taylanbabatas">Github Sayfam</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Diğer
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Yakında...</a>
-                <a class="dropdown-item" href="#">Yakında...</a>
-                <a class="dropdown-item" href="#">Yakında...</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div class=" text-center" id="isim">
-        <div><h1 class="h4 display-6 text-primary">Merhaba</h1></div>
-        <div><h2 class="h2 display-3  text-primary">Ben Taylan Babataş</h2></div>
-        <div><h1 class="h4 display-6  text-primary">Front-End Developer'ım</h1></div>
-      </div>
-      <div id="icon" class="d-flex flex-wrap justify-content-around align-items-center text-primary">
-        <i class="fa-brands fa-html5 fa-2xl"></i>
-        <i class="fa-brands fa-css3 fa-2xl"></i>
-        <i class="fa-brands fa-js fa-2xl"></i>
-        <i class="fa-brands fa-bootstrap fa-2xl"></i>
-        <i class="fa-brands fa-react fa-2xl"></i>
-        <i class="fa-brands fa-python fa-2xl"></i>
 
-      </div>
-      <div class="d-flex flex-wrap justify-content-center" id="orta">
-        <div class="container">
-            <div class="container_terminal"></div>
-            <div class="terminal_toolbar">
-                <div class="butt">
-                    <button class="btnn btn-color"></button>
-                    <button class="btnn"></button>
-                    <button class="btnn"></button>
-                </div>
-                <p class="user">userpanel</p>
-            </div>
-            <div class="terminal_body">
-                <div class="terminal_promt">
-                    <span class="terminal_user">taylanbabatas@admin:</span>
-                    <span class="terminal_location">~online</span><br>
-                    <span class="terminal_bling">$</span>
-                    <span class="terminal_cursor"></span>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div class="text-primary text-center pt-3"><h1 class="display-3">Yazılım benim için nedir?</h1><p class="opacity-50">"Benim için yazılım, sadece bir kod parçası değil, aynı zamanda bir sanattır. Her projede yaratıcılık ve yenilikçilik ruhunu yansıtmak, benim için en önemli önceliklerden biridir. Frontend geliştiricisi olarak, estetik ve kullanılabilirlik arasındaki hassas dengeyi tutturmak için her zaman yeni teknolojileri takip ediyor ve en iyi uygulamaları araştırıyorum. Benim yaklaşımım, kullanıcı deneyimini geliştirmek ve sıradanlıktan uzaklaşmak için cesur kararlar almaktır. Yenilikçi fikirlerle dolu bir yaklaşıma sahip olduğum için, her zaman bir adım önde olan projeler sunabilirim."</p></div>
-      
-      <section class="skills d-flex justify-content-center flex-wrap">
-        <div class="container">
-          <h2 class="text-center text-primary"> Yeteneklerim</h2>
-          <!-- <p class=" text-info text-center">sadece küçük bir kısımı...</p> -->
-          <div class="skill">
-            <h3>HTML</h3>
-            <div class="skill-bar">
-              <div class="skill-level" data-level="95%"></div>
-            </div>
-          </div>
-          <div class="skill">
-            <h3>CSS</h3>
-            <div class="skill-bar">
-              <div class="skill-level" data-level="85%"></div>
-            </div>
-          </div>
-          <div class="skill">
-            <h3>JavaScript</h3>
-            <div class="skill-bar">
-              <div class="skill-level" data-level="70%"></div>
-            </div>
-          </div>
-          <div class="skill">
-            <h3>Python</h3>
-            <div class="skill-bar">
-              <div class="skill-level" data-level="60%"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <div>
-       <div><h1 class="display-4 text-center text-primary">Projelerim</h1></div>
-        <div class="d-flex flex-wrap justify-content-center">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="img/yılan.avif" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Yılan Oyunu</h5>
-              <p class="card-text">Yılların eskitemediği yılan oyununu responsive tasarım ile tüm cihazlarınızdan sorunsuz oynayabilirsiniz..</p>
-            <a href="yilan.html" class="btn btn-primary">Oyunu Oyna</a>
-            </div>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="img/şifre.jpeg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Şifre güç denemesi</h5>
-              <p class="card-text">Kullandığınız veya denemek istediğiniz şifreinin ne kadar güçlü olduğunu biliyor muydunuz hadi deneyip görün.</p>
-              <a class="btn btn-primary" href="sifre.html" role="button">Tıkla ve dene!</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="social-buttons" style="margin-top: 15px;">
-        <a href="https://github.com/taylanbabatas" class="social-button github">
-          <svg class="cf-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-2.5 0 19 19"><path d="M9.464 17.178a4.506 4.506 0 0 1-2.013.317 4.29 4.29 0 0 1-2.007-.317.746.746 0 0 1-.277-.587c0-.22-.008-.798-.012-1.567-2.564.557-3.105-1.236-3.105-1.236a2.44 2.44 0 0 0-1.024-1.348c-.836-.572.063-.56.063-.56a1.937 1.937 0 0 1 1.412.95 1.962 1.962 0 0 0 2.682.765 1.971 1.971 0 0 1 .586-1.233c-2.046-.232-4.198-1.023-4.198-4.554a3.566 3.566 0 0 1 .948-2.474 3.313 3.313 0 0 1 .091-2.438s.773-.248 2.534.945a8.727 8.727 0 0 1 4.615 0c1.76-1.193 2.532-.945 2.532-.945a3.31 3.31 0 0 1 .092 2.438 3.562 3.562 0 0 1 .947 2.474c0 3.54-2.155 4.32-4.208 4.548a2.195 2.195 0 0 1 .625 1.706c0 1.232-.011 2.227-.011 2.529a.694.694 0 0 1-.272.587z"></path></svg>
-            </a>
-            <a href="#" class="social-button linkedin">
-              <svg viewBox="0 -2 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <g id="Icons" stroke="none" stroke-width="1">
-                  <g transform="translate(-702.000000, -265.000000)">
-                      <path d="M746,305 L736.2754,305 L736.2754,290.9384 C736.2754,287.257796 734.754233,284.74515 731.409219,284.74515 C728.850659,284.74515 727.427799,286.440738 726.765522,288.074854 C726.517168,288.661395 726.555974,289.478453 726.555974,290.295511 L726.555974,305 L716.921919,305 C716.921919,305 717.046096,280.091247 716.921919,277.827047 L726.555974,277.827047 L726.555974,282.091631 C727.125118,280.226996 730.203669,277.565794 735.116416,277.565794 C741.21143,277.565794 746,281.474355 746,289.890824 L746,305 L746,305 Z M707.17921,274.428187 L707.117121,274.428187 C704.0127,274.428187 702,272.350964 702,269.717936 C702,267.033681 704.072201,265 707.238711,265 C710.402634,265 712.348071,267.028559 712.41016,269.710252 C712.41016,272.34328 710.402634,274.428187 707.17921,274.428187 L707.17921,274.428187 L707.17921,274.428187 Z M703.109831,277.827047 L711.685795,277.827047 L711.685795,305 L703.109831,305 L703.109831,277.827047 L703.109831,277.827047 Z" id="LinkedIn">
-          </path>
-                  </g>
-              </g>
-          </svg>
-        </a>
-        <a href="https://www.facebook.com/taylanegemen.babatas.16/?paipv=0&eav=AfazK9bi6OotamOxXFcyFmbK7Znbmr4bli0i0Y9LUyTebWNcq9PGhg_kI6PcZ6eoVFw&_rdr" class="social-button facebook">
-          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 310 310" xml:space="preserve">
-      <g id="XMLID_834_">
-        <path id="XMLID_835_" d="M81.703,165.106h33.981V305c0,2.762,2.238,5,5,5h57.616c2.762,0,5-2.238,5-5V165.765h39.064
-          c2.54,0,4.677-1.906,4.967-4.429l5.933-51.502c0.163-1.417-0.286-2.836-1.234-3.899c-0.949-1.064-2.307-1.673-3.732-1.673h-44.996
-          V71.978c0-9.732,5.24-14.667,15.576-14.667c1.473,0,29.42,0,29.42,0c2.762,0,5-2.239,5-5V5.037c0-2.762-2.238-5-5-5h-40.545
-          C187.467,0.023,186.832,0,185.896,0c-7.035,0-31.488,1.381-50.804,19.151c-21.402,19.692-18.427,43.27-17.716,47.358v37.752H81.703
-          c-2.762,0-5,2.238-5,5v50.844C76.703,162.867,78.941,165.106,81.703,165.106z"></path>
-      </g>
-      </svg>
-        </a>
-        <a href="https://www.instagram.com/taylanbabatas/" class="social-button instagram">
-          <svg width="800px" height="800px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="Page-1" stroke="none" stroke-width="1">
-              <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -7439.000000)">
-                  <g id="icons" transform="translate(56.000000, 160.000000)">
-                      <path d="M289.869652,7279.12273 C288.241769,7279.19618 286.830805,7279.5942 285.691486,7280.72871 C284.548187,7281.86918 284.155147,7283.28558 284.081514,7284.89653 C284.035742,7285.90201 283.768077,7293.49818 284.544207,7295.49028 C285.067597,7296.83422 286.098457,7297.86749 287.454694,7298.39256 C288.087538,7298.63872 288.809936,7298.80547 289.869652,7298.85411 C298.730467,7299.25511 302.015089,7299.03674 303.400182,7295.49028 C303.645956,7294.859 303.815113,7294.1374 303.86188,7293.08031 C304.26686,7284.19677 303.796207,7282.27117 302.251908,7280.72871 C301.027016,7279.50685 299.5862,7278.67508 289.869652,7279.12273 M289.951245,7297.06748 C288.981083,7297.0238 288.454707,7296.86201 288.103459,7296.72603 C287.219865,7296.3826 286.556174,7295.72155 286.214876,7294.84312 C285.623823,7293.32944 285.819846,7286.14023 285.872583,7284.97693 C285.924325,7283.83745 286.155174,7282.79624 286.959165,7281.99226 C287.954203,7280.99968 289.239792,7280.51332 297.993144,7280.90837 C299.135448,7280.95998 300.179243,7281.19026 300.985224,7281.99226 C301.980262,7282.98483 302.473801,7284.28014 302.071806,7292.99991 C302.028024,7293.96767 301.865833,7294.49274 301.729513,7294.84312 C300.829003,7297.15085 298.757333,7297.47145 289.951245,7297.06748 M298.089663,7283.68956 C298.089663,7284.34665 298.623998,7284.88065 299.283709,7284.88065 C299.943419,7284.88065 300.47875,7284.34665 300.47875,7283.68956 C300.47875,7283.03248 299.943419,7282.49847 299.283709,7282.49847 C298.623998,7282.49847 298.089663,7283.03248 298.089663,7283.68956 M288.862673,7288.98792 C288.862673,7291.80286 291.150266,7294.08479 293.972194,7294.08479 C296.794123,7294.08479 299.081716,7291.80286 299.081716,7288.98792 C299.081716,7286.17298 296.794123,7283.89205 293.972194,7283.89205 C291.150266,7283.89205 288.862673,7286.17298 288.862673,7288.98792 M290.655732,7288.98792 C290.655732,7287.16159 292.140329,7285.67967 293.972194,7285.67967 C295.80406,7285.67967 297.288657,7287.16159 297.288657,7288.98792 C297.288657,7290.81525 295.80406,7292.29716 293.972194,7292.29716 C292.140329,7292.29716 290.655732,7290.81525 290.655732,7288.98792" id="instagram-[#167]">
-      
-      </path>
-                  </g>
-              </g>
-          </g>
-      </svg>
-        </a>
-      </div>
-      <div>
-        <h1 class="display-3 text-primary text-center" style="margin-top: 10px;">İletişim</h1>
-        <p class="text-primary opacity-50 text-center">istek,iletişim,öneri,şikayet</p>
-      </div>
-      <div class="d-flex flex-wrap justify-content-center" style="overflow: hidden;">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeI53MwqdBJXnxeDQAIU6VBUM2FiCErP5WpzpL-rNRocW8nUQ/viewform?embedded=true" width="640" height="853" frameborder="0" marginheight="0" marginwidth="0">Yükleniyor…</iframe>
-      </div>
+    <header>
+        <div class="logo">42u<span style="color:var(--brand)">.</span></div>
+        
+        <nav class="desktop-nav">
+            <a href="#work">Projeler</a>
+            <a href="#services">Hizmetler</a>
+            <a href="#about">Kurumsal</a>
+            <a href="#contact" style="padding: 10px 20px; background:white; color:black; border-radius:4px;">İletişim</a>
+        </nav>
 
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
 
-<script src="https://kit.fontawesome.com/e69b390aa0.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="script.js"></script>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#services" onclick="toggleMenu()">Hizmetler</a>
+        <a href="#work" onclick="toggleMenu()">Projeler</a>
+        <a href="#about" onclick="toggleMenu()">Hakkımızda</a>
+        <a href="#contact" onclick="toggleMenu()" style="color:var(--brand)">İletişime Geç</a>
+    </div>
+
+    <section class="hero">
+        <div class="glow-blob"></div>
+        <div class="hero-tags">
+            <span class="tag">Taylan Babataş</span>
+            <span class="tag" style="background:var(--brand); color:black; font-weight:bold;">Founder</span>
+        </div>
+        <h1>Sınırları<br><span style="color:var(--brand)">Tasarla.</span></h1>
+        <p style="max-width: 500px; margin-top: 20px;">
+            42u Agency ile dijital dünyada devrim yaratıyoruz. Türkiye'nin lider şirketleri için Yazılım, Reklam ve Matbaa çözümleri üretiyoruz.
+        </p>
+        <a href="#contact" class="btn-main">Projeyi Başlat</a>
+    </section>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            YAZILIM GÜCÜ /// DİJİTAL PAZARLAMA /// PREMİUM MATBAA /// 42U AGENCY /// GLOBAL VİZYON /// YAZILIM GÜCÜ /// DİJİTAL PAZARLAMA /// PREMİUM MATBAA /// 42U AGENCY ///
+        </div>
+    </div>
+
+    <section id="services" class="services">
+        <div style="margin-bottom: 40px;">
+            <h2>Ekosistemimiz.</h2>
+            <p>360 Derece Çözüm Merkezi</p>
+        </div>
+
+        <div class="bento-grid">
+            <div class="bento-card card-lg">
+                <i class="fas fa-code"></i>
+                <h3>Creative Development</h3>
+                <p>Sıradan web siteleri değil, ödüllü dijital deneyimler tasarlıyoruz. Mobil uygulama, e-ticaret ve özel yazılımlar.</p>
+            </div>
+
+            <div class="bento-card card-md">
+                <i class="fas fa-print"></i>
+                <h3>High-End Print</h3>
+                <p>Dokunulabilir kalite. Lüks kartvizitler, kurumsal kataloglar ve yaratıcı ambalajlar.</p>
+            </div>
+
+            <div class="bento-card card-md">
+                <i class="fas fa-bolt"></i>
+                <h3>Growth Ads</h3>
+                <p>Google & Meta reklamlarında veri odaklı, yüksek ROI (Getiri) sağlayan stratejiler.</p>
+            </div>
+
+             <div class="bento-card card-lg" style="background: #222;">
+                <i class="fas fa-users-cog" style="color:#fff"></i>
+                <h3 style="color:var(--brand)">42u Agency Culture</h3>
+                <p>Taylan Babataş yönetiminde, Türkiye'nin en büyük markalarına hizmet veren elit bir ekip.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="prestige">
+        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color:var(--gray);">Birlikte Çalıştığımız Devler</p>
+        <div class="client-list">
+            <div class="client-name">HOLDİNG A.Ş.</div>
+            <div class="client-name" style="color:var(--brand)">/</div>
+            <div class="client-name">GLOBAL LOGISTICS</div>
+            <div class="client-name" style="color:var(--brand)">/</div>
+            <div class="client-name">TECH GIANT</div>
+            <div class="client-name" style="color:var(--brand)">/</div>
+            <div class="client-name">VAKIF ÜNİVERSİTESİ</div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <a href="mailto:info@42u.com" class="footer-big-text">
+            LET'S WORK<br>TOGETHER ->
+        </a>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap:20px; margin-top: 50px;">
+            <div>
+                <p style="color:white; font-weight:bold;">42u AGENCY</p>
+                <p>İstanbul, Türkiye</p>
+            </div>
+            <div>
+                <p style="color:white; font-weight:bold;">TAYLAN BABATAŞ</p>
+                <p>Founder & Lead Developer</p>
+            </div>
+            <div style="display: flex; gap: 20px;">
+                <a href="#"><i class="fab fa-instagram" style="font-size: 1.5rem;"></i></a>
+                <a href="#"><i class="fab fa-linkedin" style="font-size: 1.5rem;"></i></a>
+                <a href="#"><i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i></a>
+            </div>
+        </div>
+        <div style="margin-top: 50px; font-size: 0.8rem; color: #444;">
+            © 2025 42u Agency. All Rights Reserved. Designed by TB.
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const bars = document.querySelectorAll('.bar');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                bars[1].style.opacity = '1';
+                bars[0].style.transform = 'rotate(0) translate(0)';
+                bars[2].style.transform = 'rotate(0) translate(0)';
+            } else {
+                menu.classList.add('active');
+                bars[1].style.opacity = '0'; // Ortadaki çizgiyi yok et
+                bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                bars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            }
+        }
+    </script>
 </body>
 </html>
